@@ -1,0 +1,7 @@
+Lab Report
+
+For the creative portion in this lab, I wrote a program that is a custom calculator for equation for Coulombs law:   F = k*q1*q2/(R*R). 
+From the user's perspective, the program prompts the user for the values of charge 1, charge 2, and the distance between them and then calculates and displays the electric field strength in Newtons using the provided values and constant.
+From the programmer's perspective, the program is structured to initialize variables, describe its purpose, take inputs, and use them in an equation to finally display an ouput. 
+I evaluated the program for correctness by testing 8 different sets of inputs, which yielded reasonable outputs.
+However, coulombs law involves absolute values and I haven't figured that out how to include that yet. 
