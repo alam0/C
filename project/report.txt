@@ -1,0 +1,12 @@
+Aron Lam
+Report for Final Project
+
+	From the user perspective, my program is supposed to animate an interactive representation of Summer and Winter. The animation functions in relation to "time", "days", and "years" which are a displayed at the bottom right of the animation window. There are 96 loops of time in a "day", 5 days to each season, and 10 days to a "year". The stars twinkle and the sun and moon rotate with accordance to time of day. There initially are ferns and trees on the landscape which grow with respect to time in the summer. In the winter, the plants stop growing and snowflakes fall from the sky. The user may add trees, ferns, and snowflakes at the cursor location with the 't', 'f', and 's' keys. The user may also press the '=' key to increase the speed of the animation.
+	
+	The program is structured with many structs, arrays, and functions that work together in main. In main I first initialize many variables and arrays that will be used in the functions. Then a while loop is used for animation with a usleep and the necessary gfx functions. While loop: Clear -> draweverything -> flush - > usleep -> wait for user input -> necessary incrementation.
+	The main inputs for functions were daytime, horizon and season. I set up typedef structs for trees, ferns, and snowflakes and then arrays of each. Code from fractals.c is used to draw smaller versions of these fractals. I initialized certain numbers of trees, ferns, and snowflakes and adjusted their counts accordingly. I also used the *num2str function given to us for lab8 to help display the time, day and year. I particularly liked writing the gradient functions which used gfx_color and gfx_line. 
+	
+	To evaluate the program for correctness, I ran the animation with suttle changes to variable values and checked to see if it produced desired results. Ferns and trees did grow only in the summer, and snowflakes fell only in the winter. There is an error in the minor addition of the year variable. I did not use the correct equation with mod to calculate the year(10days in this case). Year accumulates incorrectly after year 0. 
+	 
+
+

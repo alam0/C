@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <iostream>
+using namespace std;
+int main()
+{
+int a, b, n = 5, s = 0, temp;
+for (a = 1 ; a < n ; a++)
+	for (b = a ; b > 0 ; b--)
+		cout << a << ": " << b << endl;
+		scanf("%d", &temp);
+		if (a != b) {
+			s = s + a*b;
+			printf("%d " , s);}
+printf("\n");
+}

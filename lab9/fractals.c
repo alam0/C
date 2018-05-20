@@ -1,0 +1,204 @@
+//bost.ocks.org/mike/algorithms/  Great article page
+//Extra Credit: Implement Wilson's algorithm using recursion
+
+//fractals.c
+//Author: Aron Lam
+
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <math.h>
+#include "gfx4.h"
+#define PI 3.141592
+
+//Function Protoypes
+void mytriangledrawingfunction(int x1, int y1, int x2, int y2, int x3, int y3);
+void sierpinski(int x1, int y1, int x2, int y2, int x3, int y3);
+void mysquaredrawingfunction(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
+void shrinkingSquares(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
+void spiralSquares(int x1, int y1, double r, double angle);
+void circularLace(int x1, int y1, double r);
+void snowflake(int x1, int y1, double r);
+void tree(int x1, int y1, double r, double angle);
+void fern(int x1, int y1, double r, double angle);
+
+//Main 
+int main(){
+	int wd = 800;
+	int ht = 800;
+	int x1, x2, x3, x4, y1, y2, y3, y4, loop = 1;
+	char c;
+	double angle, r, n;
+
+	gfx_open(wd, ht, "Fractals!");
+	gfx_clear();
+	while(loop){
+		gfx_flush();
+		c = gfx_wait();
+		switch(c){
+			case '1': //Siepenski Triangle Fractal
+				gfx_clear();
+				x1 = 100; x2 = 700; x3 = 400;
+				y1 = 50; y2 = 50; y3 = 750;
+				sierpinski(x1, y1, x2, y2, x3, y3);
+				break;
+			case '2': //Shrinking Squares Fractal
+				gfx_clear();
+				x1 = 200; x2 = 600; x3 = 600; x4 = 200;
+				y1 = 200; y2 = 200; y3 = 600; y4 = 600;
+				shrinkingSquares(x1, y1, x2, y2, x3, y3, x4, y4);
+				break;
+			case '3': //Spiral Squares Fractal
+				gfx_clear();
+				x1 = 398; 
+				y1 = 398;
+				angle = (2*PI)/12;
+				r = 1;
+				spiralSquares(x1, y1, r, angle);
+				break;
+			case '4': //Circular Lace Fractal
+				gfx_clear();
+				x1 = 400;
+				y1 = 400;
+				r = 250;
+				circularLace(x1, y1, r);
+				break;
+			case '5': //SnowFlake Fractal
+				gfx_clear();
+				x1 = 400;
+				y1 = 400;
+				r = 250;
+				snowflake(x1, y1, r);
+				break;
+			case '6': //Tree Fractal
+				gfx_clear();
+				x1 = 400;
+				y1 = 750;
+				r = 250;
+				angle = (2*PI)/4;
+				tree(x1, y1, r, angle);
+				break;
+			case '7': //Fern Fractal
+				gfx_clear();
+				x1 = 400;
+				y1 = 750;
+				r = 500;
+				angle = (2*PI)/4;
+				fern(x1, y1, r, angle);
+				break;
+			case 'q':
+				loop = 0;
+		}
+	}
+	return 0;
+}
+
+//Function Definitions
+
+void mytriangledrawingfunction(int x1, int y1, int x2, int y2, int x3, int y3){
+	gfx_line(x1, y1, x2, y2);
+	gfx_line(x2, y2, x3, y3);
+	gfx_line(x3, y3, x1, y1);
+}
+// Recursive function to generate the SIEPINSKI TRIANGLE FRACTAL(given)
+void sierpinski(int x1, int y1, int x2, int y2, int x3, int y3){
+	// Base case
+  if(abs(x2-x1) < 2) return;
+  // Draw the triangle
+  mytriangledrawingfunction(x1, y1, x2, y2, x3, y3);
+  // Recursive calls
+  sierpinski(x1, y1, (x1+x2)/2, (y1+y2)/2, (x1+x3)/2, (y1+y3)/2);
+  sierpinski((x1+x2)/2, (y1+y2)/2, x2, y2, (x2+x3)/2, (y2+y3)/2);
+  sierpinski((x1+x3)/2, (y1+y3)/2, (x2+x3)/2, (y2+y3)/2, x3, y3);
+}
+
+void mysquaredrawingfunction(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4){
+	gfx_line(x1, y1, x2, y2);
+	gfx_line(x2, y2, x3, y3);
+	gfx_line(x3, y3, x4, y4);
+	gfx_line(x4, y4, x1, y1);
+}
+
+//Recursive function to generate SHRINKING SQUARES FRACTAL
+void shrinkingSquares(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4){
+	//Base case
+	int s = abs((x2 - x1) * 0.2);
+	if(s < 0.5) return;
+	//Draw the square
+	mysquaredrawingfunction(x1, y1, x2, y2, x3, y3, x4, y4);
+	//Recursive calls
+	shrinkingSquares(x1 - s, y1 - s, x1 + s, y1 - s, x1 + s, y1 + s, x1 - s, y1 + s);
+	shrinkingSquares(x2 - s, y2 - s, x2 + s, y2 - s, x2 + s, y2 + s, x2 - s, y2 + s);
+	shrinkingSquares(x3 - s, y3 - s, x3 + s, y3 - s, x3 + s, y3 + s, x3 - s, y3 + s);
+	shrinkingSquares(x4 - s, y4 - s, x4 + s, y4 - s, x4 + s, y4 + s, x4 - s, y4 + s);
+}
+
+//Recursive function to generate SPIRAL SQUARES FRACTAL
+void spiralSquares(int x1, int y1, double r, double angle){
+	double s = r*1.1; //increment side length
+	double a = angle + .5; //increment angle
+	//Base case
+	if(r > 50) return;
+	//Draw the square
+	mysquaredrawingfunction(x1 - s, y1 - s, x1 + s, y1 - s, x1 + s, y1 + s, x1 - s, y1 + s);
+	//Recursive call
+	spiralSquares(x1 + 4*s*cos(a), y1 - 4*s*sin(a), s, a);
+}
+
+	
+//Recursive function to generate CIRCULAR LACE FRACTAL
+void circularLace(int x1, int y1, double r){
+	int i;
+	double s = 0.33*r, angle = (2*PI)/6;
+	//Base case
+	if(s < 0.1) return;
+	//Draw Circle
+	gfx_circle(x1, y1, r);
+	//Recursive calls
+	for(i = 0; i <= 5; i++)
+		circularLace(x1 + r*cos(i*angle), y1 - r*sin(i*angle), s);
+}
+
+//Recursive function to generate SNOWFLAKE FRACTAL
+void snowflake(int x1, int y1, double r){
+	int i;
+	double s = 0.33*r, angle = (2*PI)/5, a = 0;
+	//Base case
+	if(s < 0.1) return;
+	//Draw lines
+	for(i = 0; i <= 4; i++)
+		gfx_line(x1, y1, x1 + r*cos(i*angle), y1 - r*sin(i*angle));
+	//Recursive calls
+	for(i = 0;i <= 4; i++)
+		snowflake(x1 + r*cos(i*angle), y1 - r*sin(i*angle), s);
+}
+
+//Recursive function to generate TREE FRACTAL
+void tree(int x1, int y1, double r, double angle){
+	//Draw line
+	gfx_line(x1, y1, x1 - r*cos(angle), y1 - r*sin(angle));
+	double s = 0.65*r, deltangle = (2*PI)/10;
+	//Base case
+	if(s < 0.2) return;
+	//Recursive calls
+	tree(x1 - r*cos(angle), y1 - r*sin(angle), s, (angle - deltangle));
+	tree(x1 - r*cos(angle), y1 - r*sin(angle), s, (angle + deltangle));
+}
+
+//Recursive function to generate FERN FRACTAL
+void fern(int x1, int y1, double r, double angle){
+	//Draw line
+	gfx_line(x1, y1, x1 - r*cos(angle), y1 - r*sin(angle));
+	int i;
+	double s = 0.33*r, deltangle = (2*PI)/9;
+	//Base case
+	if(s < 1) return;
+	//Recursive Calls
+	for(i = 1; i <= 4; i++){
+		fern(x1 - i*.25*r*cos(angle), y1 - i*.25*r*sin(angle), s,(angle - deltangle));
+		fern(x1 - i*.25*r*cos(angle), y1 - i*.25*r*sin(angle), s,(angle + deltangle));
+	}
+}
+	
+
+
